@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+<p>
+        <strong>To start:</strong> Enter Virus Total API key
+</p>
+<form role="form" method='POST' action='/vtcheck'>
+    <div class="form-group">
+      <input type="text" name="APIKEY" class="form-control" id="apikey-box" maxlength="64" placeholder="Enter APIKEY..." style="width:45%;" autofocus required>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+{% endblock %}

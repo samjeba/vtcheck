@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<p>
+        <strong>Usage:</strong> Enter hashes as multiline input without trailing newline.
+</p>
+<form action="" id="formsubmit" method="post" onsubmit="return fnGetAVscanner()">
+    <dl>
+    <dt><textarea placeholder="Enter Hash as Multiline" name=text rows=5 cols=40></textarea></dt>
+    <br><dd><button class=button type=submit name=check>Check</button></dd>
+    </dl>
+    <br><br>
+    <select name="AVScanner" id="AVScanner">
+            <option value="Symantec">Symantec</option>
+            <option value="Microsoft">Microsoft</option>
+            <option value="BitDefender">BitDefender</option>
+            <option value="Sophos">Sophos</option>
+            <option value="GData">GData</option>
+            <option value="McAfee">McAfee</option>
+            <option value="Kaspersky">Kaspersky</option>
+            <option value="TrendMicro">TrendMicro</option>
+            <option value="McAfee">McAfee</option>
+            <option value="K7AntiVirus">K7AntiVirus</option>
+            <option value="CAT-QuickHeal">CAT-QuickHeal</option>
+    </select>
+
+</form>
+
+<script>
+        function fnGetAVscanner(){
+            var e = document.getElementById("AVScanner");
+            var value = e.options[e.selectedIndex].value;
+            document.getElementById('formsubmit').action = "/submit?avscanner="+value;
+            console.log(value);
+        }
+       
+</script>
+{% endblock %}
