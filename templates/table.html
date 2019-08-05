@@ -1,23 +1,41 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h2 style="color:brown;">VT Result</h2>
 
-<table frame="box">
-        <thead><tr><th>FileHash</th><th>Detection</th><th>LastScanned</th></tr></thead>
+<div class="container"> 
+        <h2 class="display-3">VT Result</h2>
+<div class="table-responsive">
+<table class="table" frame="box">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">FileHash</th>
+                <th scope="col">Detection</th>
+                <th scope="col">LastScanned</th>
+                <th scope="col">AV_Total</th>
+                <th scope="col">AV_Detected</th>
+            </tr>
+        </thead>
 <tbody>
 {% for key, value in result.items() %}
    <tr>
-        <td style="text-align: left;"> {{ key }} </td>
-        {% for idata in value %}
-            <td style="text-align: left;"> {{ idata }} </td>
-        {% endfor %}
+        <td > {{ key }} </td>
+       
+        {%if value is string %}
+            <td > {{ value }} </td>
+        {% else %}
+            {% for idata in value %}
+                <td > {{ idata }} </td>
+            {% endfor %}
+        {%endif%}
    </tr>
 {% endfor %}
 </tbody>
 </table>
+</div>
+<br><button class="btn btn-primary">Export to CSV file</button>
 
-<br><button class=button>Export to CSV file</button>
+</div>
+
 
 <script>
     function download_csv(csv, filename) {
@@ -63,7 +81,7 @@
             download_csv(csv.join("\n"), filename);
         }
         
-        document.querySelector(".button").addEventListener("click", function () {
+        document.querySelector(".btn").addEventListener("click", function () {
             var html = document.querySelector("table").outerHTML;
                 export_table_to_csv(html, "table.csv");
         });

@@ -2,58 +2,26 @@
 <html lang="en">
 <head>
     {% block head %}
-    <title>VT Check</title>
-    <style>
-      .header{
-        width:100%;
-        position: fixed;
-        text-align: center;
-        background: #1E90FF;
-        color: white;
-        height: auto;
-        top: 0;
-        left: 0;
-        
-        }
-
-      .textarea {
-        width: 100%;
-        height: 150px;
-        padding: 12px 20px;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-        font-size: 16px;
-        resize: none;
-      }
-
-      .button {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        cursor: pointer;
-        padding: 12px 20px;
-        position:fixed; 
-        left:10px;
-    }
-     
-    </style>
+      <title>VT Check</title>
+      <!-- bootstrap -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     {% endblock %}
 </head>
 <body>
-<div class="header">
-  <h1>VT Check</h1>
-  
-</div>
-<br>
-<br>
-<br>
-<br>
+    <nav class="navbar text-light navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">VT Check</a>
+            </div>
+              <ul class="nav navbar-nav navbar-right" >
+                <li class="active"><a href="/">Home</a></li>
+               </ul>
+        </div>
+    </nav> 
 <div class=page>
     {% block body %}{% endblock %}
 </div>

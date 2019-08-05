@@ -26,7 +26,7 @@ def getavdetect(filechecksum,respjson,avscanner):
         scanstatus = 'NOTSCANNEDWITH_'+avscanner
         filestatus.update({filechecksum:scanstatus})
     elif respjson['scans'][avscanner]['detected'] == True:
-        temp = [respjson['scans'][avscanner]['result'], respjson['scan_date']]
+        temp = [respjson['scans'][avscanner]['result'], respjson['scan_date'],respjson['total'],respjson['positives']]
         filestatus.update({filechecksum:temp})
     else:
         filestatus.update({filechecksum:'FILENOTDETECTED'})
@@ -63,7 +63,7 @@ def get_vtkey():
 
 @app.route('/submit',methods=['POST'])
 def submit():
-    hashlist = request.form['text']
+    hashlist = request.form["text"]
     avscanner = request.args.get("avscanner")
     print(avscanner)
     #hashlist = hashlist.split(" ")
@@ -83,7 +83,7 @@ def submit():
             respjson = checkvt(flist)
             for flchcksum,scan in zip(flist,respjson):
                 filestatus.update(getavdetect(flchcksum,scan,avscanner))
-    #print(filestatus)
+    print(filestatus)
     return render_template('table.html', result=filestatus)
 
 if __name__ == '__main__':
