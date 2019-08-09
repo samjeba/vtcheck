@@ -15,21 +15,25 @@ def vtscan_result(filehash):
     url = 'https://www.virustotal.com/vtapi/v2/file/report'
     params = {'apikey': session["apikey"], 'resource': filehash, 'allinfo': True}
     response = requests.get(url, params=params)
-    
+    if response.status_code != 200:
+        print(response.status_code)
+        return {'errorcode' : response.status_code}
     return response.json()
 
 def getavdetect(filechecksum,respjson,avscanner):
     filestatus = {}
+    print(respjson)
     if 'scans' not in respjson:
         filestatus.update({filechecksum:'FILENOTFOUND'})
     elif avscanner not in respjson['scans']:
-        scanstatus = 'NOTSCANNEDWITH_'+avscanner
-        filestatus.update({filechecksum:scanstatus})
+        temp = ['NOTSCANNEDWITH_'+avscanner, respjson['scan_date'],respjson['total'],respjson['positives']]
+        filestatus.update({filechecksum:temp})
     elif respjson['scans'][avscanner]['detected'] == True:
         temp = [respjson['scans'][avscanner]['result'], respjson['scan_date'],respjson['total'],respjson['positives']]
         filestatus.update({filechecksum:temp})
     else:
-        filestatus.update({filechecksum:'FILENOTDETECTED'})
+        temp = ['FILENOTDETECTED',respjson['scan_date'],respjson['total'],respjson['positives']]
+        filestatus.update({filechecksum:temp})
     return filestatus
 
 def splitlistbystep(lst,step):
@@ -65,7 +69,7 @@ def get_vtkey():
 def submit():
     hashlist = request.form["text"]
     avscanner = request.args.get("avscanner")
-    print(avscanner)
+    #print(avscanner)
     #hashlist = hashlist.split(" ")
     #hashlist = [x.strip('\\r\\n') for x in hashlist]
     filestocheck = []
@@ -75,14 +79,14 @@ def submit():
     #print(filestocheck)
     splitlist = splitlistbystep(filestocheck,4)
     filestatus = {}
-    if len(filestocheck) == 1:
-        resp_json = vtscan_result(filestocheck)
-        filestatus.update(getavdetect(filestocheck[0], resp_json,avscanner))
-    elif len(filestocheck) > 1:
-        for flist in splitlist:
-            respjson = checkvt(flist)
+    for flist in splitlist:
+        respjson = checkvt(flist)
+        if len(flist) != 1:
             for flchcksum,scan in zip(flist,respjson):
                 filestatus.update(getavdetect(flchcksum,scan,avscanner))
+        else:
+            filestatus.update(getavdetect(flist[0],respjson,avscanner))
+
     print(filestatus)
     return render_template('table.html', result=filestatus)
 
