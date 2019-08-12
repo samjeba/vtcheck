@@ -15,24 +15,24 @@ def vtscan_result(filehash):
     url = 'https://www.virustotal.com/vtapi/v2/file/report'
     params = {'apikey': session["apikey"], 'resource': filehash, 'allinfo': True}
     response = requests.get(url, params=params)
-    if response.status_code != 200:
-        print(response.status_code)
-        return {'errorcode' : response.status_code}
+    #if response.status_code != 200:
+        #print(response.status_code)
+        #return {'errorcode' : response.status_code}
     return response.json()
 
 def getavdetect(filechecksum,respjson,avscanner):
     filestatus = {}
-    print(respjson)
+    #print(respjson)
     if 'scans' not in respjson:
         filestatus.update({filechecksum:'FILENOTFOUND'})
     elif avscanner not in respjson['scans']:
-        temp = ['NOTSCANNEDWITH_'+avscanner, respjson['scan_date'],respjson['total'],respjson['positives']]
+        temp = ['NOTSCANNEDWITH_'+avscanner, respjson['scan_date'],respjson['total'],respjson['positives'],respjson['permalink']]
         filestatus.update({filechecksum:temp})
     elif respjson['scans'][avscanner]['detected'] == True:
-        temp = [respjson['scans'][avscanner]['result'], respjson['scan_date'],respjson['total'],respjson['positives']]
+        temp = [respjson['scans'][avscanner]['result'], respjson['scan_date'],respjson['total'],respjson['positives'],respjson['permalink']]
         filestatus.update({filechecksum:temp})
     else:
-        temp = ['FILENOTDETECTED',respjson['scan_date'],respjson['total'],respjson['positives']]
+        temp = ['FILENOTDETECTED',respjson['scan_date'],respjson['total'],respjson['positives'],respjson['permalink']]
         filestatus.update({filechecksum:temp})
     return filestatus
 
@@ -87,7 +87,7 @@ def submit():
         else:
             filestatus.update(getavdetect(flist[0],respjson,avscanner))
 
-    print(filestatus)
+    #print(filestatus)
     return render_template('table.html', result=filestatus)
 
 if __name__ == '__main__':

@@ -13,6 +13,7 @@
                 <th scope="col">LastScanned</th>
                 <th scope="col">AV_Total</th>
                 <th scope="col">AV_Detected</th>
+                <th scope="col">VT_Page</th>
             </tr>
         </thead>
 <tbody>
@@ -24,7 +25,11 @@
             <td > {{ value }} </td>
         {% else %}
             {% for idata in value %}
-                <td > {{ idata }} </td>
+                {%if loop.last%}
+                    <td> <a href={{idata}}>VT LINK</a></td>
+                {%else%}
+                    <td > {{ idata }} </td>
+                {%endif%}
             {% endfor %}
         {%endif%}
    </tr>
@@ -72,7 +77,17 @@
                         var row = [], cols = rows[i].querySelectorAll("td, th");
                         
                 for (var j = 0; j < cols.length; j++) 
-                    row.push(cols[j].innerText);
+                    {
+                        if (cols[j].innerText == "VT LINK")
+                        {
+                            row.push(cols[j].getElementsByTagName('a')[0].href)
+                        }
+                        else
+                        {
+                            row.push(cols[j].innerText);
+                        }
+                            
+                    }
                 
                         csv.push(row.join(","));		
                 }
