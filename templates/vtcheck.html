@@ -2,7 +2,7 @@
 {% block body %}
 
 <div class = "container">
-        <strong>Usage:</strong> Enter hashes as multiline input without trailing newline.
+        <strong>Usage:</strong> Enter hashes as multiline input without trailing newline.Better use hashes in count of 10,20,40.
 <br><br>
 <form action="" id="formsubmit" method="POST" onsubmit="return fnGetAVscanner()">
         <div class="form-group">
@@ -11,9 +11,8 @@
                                 <textarea placeholder="Enter Hash as Multiline" class="form-control rounded mb-0" rows="7" name=text></textarea>
                         </div>
                 </div>
-                <br><button class="btn btn-primary" type="submit" >Check</button>
-    
-                <br><br>
+
+                <br>
                 <select name="AVScanner" id="AVScanner">
                         <option value="Symantec">Symantec</option>
                         <option value="Microsoft">Microsoft</option>
@@ -27,6 +26,10 @@
                         <option value="K7AntiVirus">K7AntiVirus</option>
                         <option value="CAT-QuickHeal">CAT-QuickHeal</option>
                 </select>
+
+                <br><br><button class="btn btn-primary" type="submit" >Check</button>
+    
+                
         </div>
 </form>
 </div>
