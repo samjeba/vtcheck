@@ -22,7 +22,7 @@ future==0.17.1
 idna==2.8
 isort==4.3.21
 itsdangerous==1.1.0
-Jinja2==2.10.1
+Jinja2==2.11.3
 lazy-object-proxy==1.4.1
 lief==0.9.0
 MarkupSafe==1.1.1
